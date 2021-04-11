@@ -1,16 +1,16 @@
 #!/bin/bash
 #stl (Wegare)
 clear
-udp2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i udp | cut -d= -f2)" 
-user2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i user | cut -d= -f2 | head -n1)" 
-host2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
-port2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i port | cut -d= -f2 | head -n1)" 
-bug2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i bug | cut -d= -f2)" 
-pass2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
-pp2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i pp | cut -d= -f2 | tail -n1)" 
-payload2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i payload | cut -d= -f2)" 
-proxy2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i proxy | cut -d= -f2)" 
-met2="$(cat /root/ebot tunnel/akun/stl.txt | grep -i met | cut -d= -f2 | head -n1)" 
+udp2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i udp | cut -d= -f2)" 
+user2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i user | cut -d= -f2 | head -n1)" 
+host2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
+port2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i port | cut -d= -f2 | head -n1)" 
+bug2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i bug | cut -d= -f2)" 
+pass2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
+pp2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i pp | cut -d= -f2 | tail -n1)" 
+payload2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i payload | cut -d= -f2)" 
+proxy2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i proxy | cut -d= -f2)" 
+met2="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i met | cut -d= -f2 | head -n1)" 
 echo "Inject http & https recode by e-bot"
 echo "1. Sett Profile"
 echo "2. Start Inject"
@@ -209,7 +209,7 @@ echo "[SSH]
 client = yes
 accept = localhost:69
 connect = $host:$port
-sni = $bug" > /root/ebot tunnel/akun/ssl.conf
+sni = $bug" > /root/ebot-tunnel/akun/ssl.conf
 echo "Host ssl*
     PermitLocalCommand yes
     LocalCommand gproxy %h
@@ -236,23 +236,23 @@ udp=$udp
 payload=$payload
 proxy=$proxy
 pp=$pp
-bug=$bug" > /root/ebot tunnel/akun/stl.txt
+bug=$bug" > /root/ebot-tunnel/akun/stl.txt
 echo "Sett Profile Sukses"
 sleep 2
 clear
 stl
 elif [ "${tools}" = "2" ]; then
 ipmodem="$(route -n | grep -i 0.0.0.0 | head -n1 | awk '{print $2}')" 
-echo "ipmodem=$ipmodem" > /root/ebot tunnel/akun/ipmodem.txt
+echo "ipmodem=$ipmodem" > /root/ebot-tunnel/akun/ipmodem.txt
 ip tuntap add dev tun1 mode tun
 ifconfig tun1 10.0.0.1 netmask 255.255.255.0
 clear
-met="$(cat /root/ebot tunnel/akun/stl.txt | grep -i met | cut -d= -f2)" 
+met="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i met | cut -d= -f2)" 
 if [ "$met" = "http" ]; then
-user="$(cat /root/ebot tunnel/akun/stl.txt | grep -i user | cut -d= -f2)" 
-host="$(cat /root/ebot tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
-port="$(cat /root/ebot tunnel/akun/stl.txt | grep -i port | cut -d= -f2 | head -n1)" 
-pass="$(cat /root/ebot tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
+user="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i user | cut -d= -f2)" 
+host="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
+port="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i port | cut -d= -f2 | head -n1)" 
+pass="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
 http-stl > /dev/null &
 sleep 2
 screen -d -m sshpass -p $pass ssh -oStrictHostKeyChecking=no -CND :1080 -p "$port" "$user"@"$host" -o "Proxycommand=ncat --proxy-type http --proxy 127.0.0.1:6969 %h %p"
@@ -263,8 +263,8 @@ cek="$(ls /root/.ssh/ | grep -i know | cut -d_ -f1)"
 if [ "$cek" = "known" ]; then
 rm -f /root/.ssh/known*
 fi
-pass="$(cat /root/ebot tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
-stunnel /root/ebot tunnel/akun/ssl.conf > /dev/null &
+pass="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i pass | cut -d= -f2)" 
+stunnel /root/ebot-tunnel/akun/ssl.conf > /dev/null &
 sleep 1
 sshpass -p $pass ssh -N ssl1 &
 else
@@ -274,13 +274,13 @@ fi
 echo '
 #!/bin/bash
 #stl (Wegare)
-host="$(cat /root/ebot tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
+host="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)"
 fping -l $host' > /usr/bin/ping-stl
 chmod +x /usr/bin/ping-stl
 /usr/bin/ping-stl > /dev/null 2>&1 &
 elif [ "${tools}" = "3" ]; then
-host="$(cat /root/ebot tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)" 
-route="$(cat /root/ebot tunnel/akun/ipmodem.txt | grep -i ipmodem | cut -d= -f2 | tail -n1)" 
+host="$(cat /root/ebot-tunnel/akun/stl.txt | grep -i host | cut -d= -f2 | head -n1)" 
+route="$(cat /root/ebot-tunnel/akun/ipmodem.txt | grep -i ipmodem | cut -d= -f2 | tail -n1)" 
 killall -q badvpn-tun2socks ssh ping-stl stunnel sshpass http-stl screen fping
 route del 8.8.8.8 gw "$route" metric 0 2>/dev/null
 route del 8.8.4.4 gw "$route" metric 0 2>/dev/null
